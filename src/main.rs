@@ -1,3 +1,7 @@
+// removes rust compiler warnings
+#![allow(unused)]
+
+
 use clap::Parser;
 use std::fs::File;
 use std::io::prelude::*;
@@ -93,22 +97,24 @@ fn fetch_device_info() {
     let mut sys = System::new_all();
 
     sys.refresh_all();
-    println!("{}", style("\nSystem Information\n").green());
 
-    println!("{}: {} GB", style("total memory").green(), sys.total_memory()/u64::pow(10, 9));
-    println!("{}: {} GB", style("used memory").green(), sys.used_memory()/u64::pow(10, 9));
-    println!("{}: {} GB", style("total swap").green(), sys.total_swap()/u64::pow(10, 9));
-    println!("{}: {} GB\n", style("used swap").green(), sys.used_swap()/u64::pow(10, 9));   
+    println!("{}", style("\nSystem Information\n").cyan());
 
-    println!("{}:             {:?}", style("System name").green(), System::name());
-    println!("{}:   {:?}", style("System Kernel Version").green(), System::kernel_version());
-    println!("{}:       {:?}", style("System OS Version").green(), System::os_version());
-    println!("{}:        {:?}", style("System host name").green(), System::host_name());
+    println!("{}: {} GB", style("total memory").cyan(), sys.total_memory()/u64::pow(10, 9));
+    println!("{}: {} GB", style("used memory").cyan(), sys.used_memory()/u64::pow(10, 9));
+    println!("{}: {} GB", style("total swap").cyan(), sys.total_swap()/u64::pow(10, 9));
+    println!("{}: {} GB\n", style("used swap").cyan(), sys.used_swap()/u64::pow(10, 9));   
+
+    println!("{}:             {:?}", style("System name").cyan(), System::name().unwrap());
+    println!("{}:   {:?}", style("System Kernel Version").cyan(), System::kernel_version().unwrap());
+    println!("{}:       {:?}", style("System OS Version").cyan(), System::os_version().unwrap());
+    println!("{}:        {:?}", style("System host name").cyan(), System::host_name().unwrap());
 
     println!("NB CPUs: {}", sys.cpus().len());
 
 }
 
-// fn dir_search() {
+fn dir_search() {
+    
 
-// }
+}
