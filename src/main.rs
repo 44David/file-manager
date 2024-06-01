@@ -97,6 +97,25 @@ fn fetch_device_info() {
     let mut sys = System::new_all();
 
     sys.refresh_all();
+    println!("{}", style("
+                            .oodMMMM
+                   .oodMMMMMMMMMMMMM
+       ..oodMMM  MMMMMMMMMMMMMMMMMMM
+ oodMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
+ MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
+ MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
+ MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
+ MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
+ MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
+ 
+ MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
+ MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
+ MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
+ MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
+ MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
+ `^^^^^^MMMMMMM  MMMMMMMMMMMMMMMMMMM
+       ````^^^^  ^^MMMMMMMMMMMMMMMMM
+                      ````^^^^^^MMMM ").blue());
 
     println!("{}", style("\nSystem Information\n").cyan());
 
@@ -110,7 +129,7 @@ fn fetch_device_info() {
     println!("{}:       {:?}", style("System OS Version").cyan(), System::os_version().unwrap());
     println!("{}:        {:?}", style("System host name").cyan(), System::host_name().unwrap());
 
-    println!("NB CPUs: {}", sys.cpus().len());
+    println!("{}:          {:?}", style("Number of CPU's").cyan(), sys.cpus().len());
 
 }
 
