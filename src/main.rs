@@ -13,6 +13,11 @@ use sysinfo::{
 use console::style;
 use std::env;
 
+
+use chrono::offset::Local;
+use chrono::DateTime;
+use std::time::SystemTime;
+
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
 
@@ -28,18 +33,22 @@ fn main() {
 
     if args.action == "makefile" {
        let _ = make_file();
+       println!("{}", style("File created successfully").cyan())
     } 
 
     if args.action == "rmfile" {
         let _ = del_file();
+        println!("{}", style("File removed successfully").red())
     }
 
     if args.action == "makedir" {
         let _ = make_dir();
+        println!("{}", style("Folder created successfully").cyan())
     }
 
     if args.action == "rmdir" {
         let _ = del_dir();
+        println!("{}", style("Folder removed successfully").cyan())
     }
 
     if args.action == "infofile" {
@@ -88,12 +97,14 @@ fn file_properties() -> std::io::Result<()> {
     let args = Args::parse();
 
     let file_metadata = fs::metadata(args.name)?;
+    println!("{}", style("About this file").cyan());
+
     println!("File Size: {:?} KB ", file_metadata.len());
     println!("File Type: {:?} ", file_metadata.file_type());
 
-    // Modify into more readable format
     if let Ok(time) = file_metadata.created() {
-        println!("Created At: {time:?}");
+        let datetime: DateTime::<Local> = time.into();
+        println!("Created At: {}", datetime.format("%d/%m/%Y %T"));
     }
     Ok(())
 
