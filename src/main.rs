@@ -11,6 +11,7 @@ use sysinfo::{
     Components, Disks, Networks, System,
 };
 use console::style;
+use std::env;
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
@@ -23,6 +24,7 @@ struct Args {
 
 fn main() {
     let args = Args::parse();
+
 
     if args.action == "makefile" {
        let _ = make_file();
@@ -47,6 +49,10 @@ fn main() {
     if args.action == "sysfetch" {
         let _ = fetch_device_info();
     }
+
+    if args.action == "search" {
+        let _ = dir_search();
+    } 
 }
 
 fn make_file() -> std::io::Result<()> {
@@ -81,41 +87,36 @@ fn del_dir() -> std::io::Result<()> {
 fn file_properties() -> std::io::Result<()> {
     let args = Args::parse();
 
-    let dir_metadata = fs::metadata(args.name)?;
-    println!("File Size: {:?} KB ", dir_metadata.len());
-    println!("File Type: {:?} ", dir_metadata.file_type());
+    let file_metadata = fs::metadata(args.name)?;
+    println!("File Size: {:?} KB ", file_metadata.len());
+    println!("File Type: {:?} ", file_metadata.file_type());
 
     // Modify into more readable format
-    if let Ok(time) = dir_metadata.created() {
+    if let Ok(time) = file_metadata.created() {
         println!("Created At: {time:?}");
     }
     Ok(())
 
 }
 
+fn dir_search() -> std::io::Result<()> {
+    let args = Args::parse();
+    let path = env::current_dir()?;
+    let file_metadata = fs::metadata(args.name)?;
+
+    if file_metadata.is_file() {
+        println!("File is here")
+    } else {
+        println!("File not found")
+    };
+
+    Ok(())
+}
+
 fn fetch_device_info() {
     let mut sys = System::new_all();
 
     sys.refresh_all();
-    println!("{}", style("
-                            .oodMMMM
-                   .oodMMMMMMMMMMMMM
-       ..oodMMM  MMMMMMMMMMMMMMMMMMM
- oodMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
- MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
- MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
- MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
- MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
- MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
- 
- MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
- MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
- MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
- MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
- MMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMM
- `^^^^^^MMMMMMM  MMMMMMMMMMMMMMMMMMM
-       ````^^^^  ^^MMMMMMMMMMMMMMMMM
-                      ````^^^^^^MMMM ").blue());
 
     println!("{}", style("\nSystem Information\n").cyan());
 
@@ -133,7 +134,3 @@ fn fetch_device_info() {
 
 }
 
-fn dir_search() {
-    
-
-}
