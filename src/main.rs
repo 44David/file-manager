@@ -97,15 +97,20 @@ fn file_properties() -> std::io::Result<()> {
     let args = Args::parse();
 
     let file_metadata = fs::metadata(args.name)?;
-    println!("{}", style("About this file").cyan());
+    println!("{}", style("\nAbout this file").cyan());
 
     println!("File Size: {:?} KB ", file_metadata.len());
-    println!("File Type: {:?} ", file_metadata.file_type());
 
     if let Ok(time) = file_metadata.created() {
         let datetime: DateTime::<Local> = time.into();
         println!("Created At: {}", datetime.format("%d/%m/%Y %T"));
-    }
+
+    };
+
+    if let Ok(mod_time) = file_metadata.modified() {
+        let last_modified: DateTime::<Local> = mod_time.into();
+        println!("Modified At: {}\n", last_modified.format("%d/%m/%Y %T"));
+    };
     Ok(())
 
 }
@@ -113,16 +118,18 @@ fn file_properties() -> std::io::Result<()> {
 fn dir_search() -> std::io::Result<()> {
     let args = Args::parse();
     let path = env::current_dir()?;
-    let file_metadata = fs::metadata(args.name)?;
+    let file_metadata = fs::metadata(&args.name)?;
 
     if file_metadata.is_file() {
-        println!("File is here")
+        println!("{} found in {}", args.name, path.display() );
     } else {
-        println!("File not found")
+        println!("{} was not found", args.name);
     };
 
     Ok(())
 }
+
+
 
 fn fetch_device_info() {
     let mut sys = System::new_all();
@@ -142,6 +149,6 @@ fn fetch_device_info() {
     println!("{}:        {:?}", style("System host name").cyan(), System::host_name().unwrap());
 
     println!("{}:          {:?}", style("Number of CPU's").cyan(), sys.cpus().len());
-
 }
+
 

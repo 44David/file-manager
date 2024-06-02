@@ -1,13 +1,12 @@
-# File Manager rs
+# Filex-rs
 
-## Simplify windows terminal commands 
+## Simplify windows terminal commands and create files easier
 
+``` filex-rs --action makedir project_folder ```
 
-### To Do
+``` filex-rs --action makefile main.py ```
 
-- [ ] - Add error handling for each action/command
-- [ ] - Allow directory searching 
-- [x] - Fix fetching system info 
-- [ ] - Fix file metadata formatting 
-- [ ] - Clean up excessive use of if statements
+``` filex-rs --action infofile project.c ```
 
+## How to use:
+##### simply add as an environment variable in system settings
