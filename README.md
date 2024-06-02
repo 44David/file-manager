@@ -9,4 +9,4 @@
 ``` filex-rs --action infofile project.c ```
 
 ## How to use:
-##### simply add as an environment variable in system settings
+### simply add as an environment variable in system settings
