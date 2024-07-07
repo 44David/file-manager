@@ -8,5 +8,7 @@
 
 ``` filex-rs --action infofile project.c ```
 
-## How to use:
-### simply add as an environment variable in system settings
+# TO DO 
+- [ ] - Simplify arguments for executing commands
+- [ ] - Publish to scoop package manager
+- [ ] - Add more commands
